@@ -1,5 +1,7 @@
 package es.iessaladillo.pedrojoya.baldogym.data.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 
 data class TrainingSession(
@@ -11,6 +13,5 @@ data class TrainingSession(
     val time: String,
     val trainer: String,
     val room: String,
-    val participants: Int,
-    var userJoined: Boolean
-)
+    var participants: Int,
+    var userJoined: Boolean)

@@ -66,6 +66,8 @@ class ScheduleActivityAdapter : RecyclerView.Adapter<ScheduleActivityAdapter.Vie
 
         fun onItemClick(position: Int)
 
+        fun onViewClick(position: Int)
+
     }
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -83,6 +85,18 @@ class ScheduleActivityAdapter : RecyclerView.Adapter<ScheduleActivityAdapter.Vie
     class ViewHolder(override val containerView: View, onItemClickListener: OnItemClickListener?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         init {
+
+            itemView.setOnClickListener {
+
+                val position = adapterPosition
+
+                if (position != RecyclerView.NO_POSITION) {
+
+                    onItemClickListener?.onViewClick(position)
+
+                }
+
+            }
 
             btnjoin.setOnClickListener {
 
@@ -124,13 +138,11 @@ class ScheduleActivityAdapter : RecyclerView.Adapter<ScheduleActivityAdapter.Vie
 
             lblRoom.text = session.room
 
-            var participants = session.participants
-
 
 
             if (!session.userJoined) {
 
-                lblParticipants.text = participants.toString()
+                lblParticipants.text = session.participants.toString()
                 btnjoin.visibility = View.VISIBLE
                 btnquit.visibility = View.INVISIBLE
 
@@ -138,9 +150,7 @@ class ScheduleActivityAdapter : RecyclerView.Adapter<ScheduleActivityAdapter.Vie
 
             else {
 
-                participants++
-
-                lblParticipants.text = participants.toString()
+                lblParticipants.text = session.participants.toString()
 
                 btnjoin.visibility = View.INVISIBLE
                 btnquit.visibility = View.VISIBLE

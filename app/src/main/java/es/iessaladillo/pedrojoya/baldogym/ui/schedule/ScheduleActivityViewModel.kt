@@ -20,6 +20,12 @@ class ScheduleActivityViewModel(private val repository: Repository) {
 
     }
 
+    fun querySession(): List<TrainingSession> {
+
+        return _sessions.value!!.toList()
+
+    }
+
 
 
     fun navigateToDay(weekDay: WeekDay) {
@@ -27,6 +33,14 @@ class ScheduleActivityViewModel(private val repository: Repository) {
         val week = repository.navigateToDay(weekDay)
 
         _sessions.value = week
+
+    }
+
+    fun editSession(session: TrainingSession, isJoined: Boolean) {
+
+        repository.editSession(session, isJoined)
+
+        _sessions.value = querySession()
 
     }
 

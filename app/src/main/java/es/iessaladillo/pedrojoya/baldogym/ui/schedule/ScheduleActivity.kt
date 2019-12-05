@@ -1,5 +1,6 @@
 package es.iessaladillo.pedrojoya.baldogym.ui.schedule
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -15,9 +16,12 @@ import es.iessaladillo.pedrojoya.baldogym.data.LocalRepository.sessions
 import es.iessaladillo.pedrojoya.baldogym.data.entity.TrainingSession
 import es.iessaladillo.pedrojoya.baldogym.data.entity.WeekDay
 import es.iessaladillo.pedrojoya.baldogym.data.entity.getCurrentWeekDay
+import es.iessaladillo.pedrojoya.baldogym.ui.trainingsession.TrainingSessionActivity
 import kotlinx.android.synthetic.main.schedule_activity.*
 
 class ScheduleActivity : AppCompatActivity() {
+
+    lateinit var viewSelected: TrainingSession
 
     private val viewModel = ScheduleActivityViewModel(LocalRepository)
 
@@ -28,6 +32,16 @@ class ScheduleActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
 
                 updateItem(getItem(position))
+
+            }
+
+            override fun onViewClick(position: Int) {
+
+                viewSelected = getItem(position)
+
+                val intent = Intent(this@ScheduleActivity, TrainingSessionActivity::class.java).putExtra("EXTRA_ID", viewSelected.id)
+
+                startActivityForResult(intent, 1)
 
             }
 
@@ -43,11 +57,15 @@ class ScheduleActivity : AppCompatActivity() {
 
             item.userJoined = false
 
+            item.participants--
+
         }
 
         else {
 
             item.userJoined = true
+
+            item.participants++
 
         }
 
@@ -151,6 +169,23 @@ class ScheduleActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
 
             adapter = listAdapter
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (data != null) {
+
+            super.onActivityResult(requestCode, resultCode, data)
+
+            if (requestCode == 1) {
+                val isJoined = data.getBooleanExtra("EXTRA_JOIN", false)
+
+                viewModel.editSession(viewSelected, isJoined)
+
+
+            }
         }
 
     }

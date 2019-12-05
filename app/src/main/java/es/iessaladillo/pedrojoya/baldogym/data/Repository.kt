@@ -7,4 +7,6 @@ interface Repository {
 
     fun navigateToDay(weekDay: WeekDay): List<TrainingSession>
 
+    fun editSession(session: TrainingSession, isJoined: Boolean)
+
 }

@@ -97,4 +97,10 @@ object LocalRepository : Repository {
 
     }
 
+    override fun editSession(session: TrainingSession, isJoined: Boolean) {
+
+        session.userJoined = isJoined
+
+    }
+
 }
