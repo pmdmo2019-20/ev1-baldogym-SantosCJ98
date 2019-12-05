@@ -14,6 +14,7 @@ import es.iessaladillo.pedrojoya.baldogym.data.LocalRepository
 import es.iessaladillo.pedrojoya.baldogym.data.LocalRepository.sessions
 import es.iessaladillo.pedrojoya.baldogym.data.entity.TrainingSession
 import es.iessaladillo.pedrojoya.baldogym.data.entity.WeekDay
+import es.iessaladillo.pedrojoya.baldogym.data.entity.getCurrentWeekDay
 import kotlinx.android.synthetic.main.schedule_activity.*
 
 class ScheduleActivity : AppCompatActivity() {
@@ -93,19 +94,48 @@ class ScheduleActivity : AppCompatActivity() {
 
     private fun mostrarDia() {
 
-        lblMonday.setOnClickListener{viewModel.navigateToDay(WeekDay.MONDAY)}
+        lblCurrentDay.text = getString(getCurrentWeekDay().nameResId)
 
-        lblTuesday.setOnClickListener{viewModel.navigateToDay(WeekDay.TUESDAY)}
 
-        lblWednesday.setOnClickListener{viewModel.navigateToDay(WeekDay.WEDNESDAY)}
+        lblMonday.setOnClickListener{viewModel.navigateToDay(WeekDay.MONDAY)
 
-        lblThursday.setOnClickListener{viewModel.navigateToDay(WeekDay.THURSDAY)}
+            lblCurrentDay.text = getString(R.string.schedule_monday)
+        }
 
-        lblFriday.setOnClickListener{viewModel.navigateToDay(WeekDay.FRIDAY)}
+        lblTuesday.setOnClickListener{viewModel.navigateToDay(WeekDay.TUESDAY)
 
-        lblSaturday.setOnClickListener{viewModel.navigateToDay(WeekDay.SATURDAY)}
+            lblCurrentDay.text = getString(R.string.schedule_tuesday)
 
-        lblSunday.setOnClickListener{viewModel.navigateToDay(WeekDay.SUNDAY)}
+        }
+
+        lblWednesday.setOnClickListener{viewModel.navigateToDay(WeekDay.WEDNESDAY)
+
+            lblCurrentDay.text = getString(R.string.schedule_wednesday)
+
+        }
+
+        lblThursday.setOnClickListener{viewModel.navigateToDay(WeekDay.THURSDAY)
+
+            lblCurrentDay.text = getString(R.string.schedule_thursday)
+        }
+
+        lblFriday.setOnClickListener{viewModel.navigateToDay(WeekDay.FRIDAY)
+
+            lblCurrentDay.text = getString(R.string.schedule_friday)
+
+        }
+
+        lblSaturday.setOnClickListener{viewModel.navigateToDay(WeekDay.SATURDAY)
+
+            lblCurrentDay.text = getString(R.string.schedule_saturday)
+
+        }
+
+        lblSunday.setOnClickListener{viewModel.navigateToDay(WeekDay.SUNDAY)
+
+            lblCurrentDay.text = getString(R.string.schedule_sunday)
+
+        }
 
     }
 
