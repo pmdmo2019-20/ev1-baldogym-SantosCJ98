@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom
 
 object LocalRepository : Repository {
 
-    // TODO:
+    var sessions = createWeekSchedule()
 
     private fun createWeekSchedule(): List<TrainingSession> {
 
@@ -89,6 +89,12 @@ object LocalRepository : Repository {
             }
         }
         return trainingSessions
+    }
+
+    override fun navigateToDay(weekDay: WeekDay): List<TrainingSession> {
+
+        return sessions.filter { it.weekDay == weekDay }
+
     }
 
 }

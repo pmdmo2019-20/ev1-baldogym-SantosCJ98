@@ -1,26 +1,18 @@
-package es.iessaladillo.pedrojoya.pr04.ui.main
+package es.iessaladillo.pedrojoya.baldogym.ui.schedule
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.RecyclerView
-import es.iessaladillo.pedrojoya.pr04.R
-import es.iessaladillo.pedrojoya.pr04.data.entity.Task
-import es.iessaladillo.pedrojoya.pr04.utils.strikeThrough
+import es.iessaladillo.pedrojoya.baldogym.R
+import es.iessaladillo.pedrojoya.baldogym.data.entity.TrainingSession
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.tasks_activity_item.*
+import kotlinx.android.synthetic.main.schedule_activity_item.*
 
-// TODO: Crea una clase TasksActivityAdapter que actúe como adaptador del RecyclerView
-//  y que trabaje con una lista de tareas.
-//  Cuando se haga click sobre un elemento se debe cambiar el estado de completitud
-//  de la tarea, pasando de completada a pendiente o viceversa.
-//  La barra de cada elemento tiene un color distinto dependiendo de si la tarea está
-//  completada o no.
-//  Debajo del concepto se muestra cuando fue creada la tarea, si la tarea está pendiente,
-//  o cuando fue completada si la tarea ya ha sido completada.
-//  Si la tarea está completada, el checkBox estará chequeado y el concepto estará tachado.
 
-class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolder>() {
+class ScheduleActivityAdapter : RecyclerView.Adapter<ScheduleActivityAdapter.ViewHolder>() {
 
     init {
 
@@ -34,7 +26,7 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
 
         val layoutInflater = LayoutInflater.from(parent.context)
 
-        val itemView = layoutInflater.inflate(R.layout.tasks_activity_item, parent, false)
+        val itemView = layoutInflater.inflate(R.layout.schedule_activity_item, parent, false)
 
         return ViewHolder(itemView, onItemClickListener)
 
@@ -46,7 +38,7 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
 
     }
 
-    fun submitList(newList: List<Task>) {
+    fun submitList(newList: List<TrainingSession>) {
 
         data = newList
 
@@ -56,7 +48,7 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
 
     }
 
-    private var data: List<Task> = emptyList()
+    private var data: List<TrainingSession> = emptyList()
 
     init {
 
@@ -92,7 +84,7 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
 
         init {
 
-            itemView.setOnClickListener {
+            btnjoin.setOnClickListener {
 
                 val position = adapterPosition
 
@@ -104,7 +96,7 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
 
             }
 
-            chkCompleted.setOnClickListener {
+            btnquit.setOnClickListener {
 
                 val position = adapterPosition
 
@@ -119,40 +111,42 @@ class TasksActivityAdapter : RecyclerView.Adapter<TasksActivityAdapter.ViewHolde
         }
 
 
-        fun bind(task: Task) {
+        fun bind(session: TrainingSession) {
 
-            lblConcept.text = task.concept
 
-            chkCompleted.setChecked(task.completed)
+            lblTime.text = session.time
 
-            if (chkCompleted.isChecked) {
+            imgSession.setImageResource(session.photoResId)
 
-                lblConcept.strikeThrough(true)
+            lblSession.text = session.name
 
-                viewBar.setBackgroundResource(R.color.colorCompletedTask)
+            lblTrainer.text = session.trainer
 
-                lblCompleted.text = task.completedAt
+            lblRoom.text = session.room
 
-                task.completed = true
+            var participants = session.participants
 
-                //TODO
+
+
+            if (!session.userJoined) {
+
+                lblParticipants.text = participants.toString()
+                btnjoin.visibility = View.VISIBLE
+                btnquit.visibility = View.INVISIBLE
 
             }
 
             else {
 
-                lblConcept.strikeThrough(false)
+                participants++
 
-                viewBar.setBackgroundResource(R.color.colorPendingTask)
+                lblParticipants.text = participants.toString()
 
-                lblCompleted.text = task.createdAt
+                btnjoin.visibility = View.INVISIBLE
+                btnquit.visibility = View.VISIBLE
 
-                task.completed = false
-
-                //TODO
 
             }
-
 
 
         }
